@@ -87,7 +87,10 @@
       background: #F4F4F4;
     }
 
-
+    #select {
+      background: inherit;
+      border: 0px;
+    }
 
     #numTeamDiv,
     #numAttendDiv {
@@ -390,6 +393,18 @@
             td.onkeyup = function() {
               data[this.parentNode.id][this.className] = this.innerHTML;
             }
+            if (key == "Flag") {
+              td.contentEditable = "false";
+              var select = document.createElement("select");
+              select.id = "select";
+              for (var ix = 1; ix < 6; ix++) {
+                var option = document.createElement("option");
+                option.value = ix;
+                option.innerHTML = ix;
+                select.appendChild(option);
+              }
+              td.appendChild(select);
+            }
             personTr.appendChild(td);
           }
           tbody.appendChild(personTr);
@@ -569,6 +584,17 @@
         if (key == "Name" || key == "name") {
           td.innerHTML = "New student"; //设置显示的数据，可以是标签．
           newPerson[key] = "New student";
+        } else if (key == "Flag") {
+          td.contentEditable = "false";
+          var select = document.createElement("select");
+          select.id = "select";
+          for (var i = 1; i < 6; i++) {
+            var option = document.createElement("option");
+            option.value = i;
+            option.innerHTML = i;
+            select.appendChild(option);
+          }
+          td.appendChild(select);
         } else {
           td.innerHTML = " "; //设置显示的数据，可以是标签．
           newPerson[key] = " ";
