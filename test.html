@@ -610,11 +610,11 @@
             }
             select.appendChild(option);
           }
-          td.appendChild(select);
           select.value = "";
           select.onchange = function() {
             data[this.parentNode.parentNode.id]["Flag"] = this.value;
           }
+          td.appendChild(select);
         } else {
           td.innerHTML = " "; //设置显示的数据，可以是标签．
           newPerson[key] = " ";
