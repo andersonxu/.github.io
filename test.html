@@ -387,23 +387,34 @@
           personTr.appendChild(td);
           for (var key in data[i]) {
             var td = document.createElement('td');
-            td.contentEditable = "true";
-            td.innerHTML = data[i][key]; //设置显示的数据，可以是标签．
-            td.className = key; //设置div的属性，如：class，title，id 等等
-            td.onkeyup = function() {
-              data[this.parentNode.id][this.className] = this.innerHTML;
-            }
+            td.className = key;
             if (key == "Flag") {
               td.contentEditable = "false";
               var select = document.createElement("select");
               select.id = "select";
-              for (var ix = 1; ix < 6; ix++) {
+              for (var ix = 0; ix < 6; ix++) {
                 var option = document.createElement("option");
                 option.value = ix;
-                option.innerHTML = ix;
+                if (ix == 0) {
+                  option.value = "";
+                  option.innerHTML = "";
+                } else {
+                  option.value = ix;
+                  option.innerHTML = ix;
+                }
                 select.appendChild(option);
               }
+              select.value = data[i][key];
+              select.onchange = function() {
+                data[this.parentNode.parentNode.id]["Flag"] = this.value;
+              }
               td.appendChild(select);
+            } else {
+              td.contentEditable = "true";
+              td.innerHTML = data[i][key];
+              td.onkeyup = function() {
+                data[this.parentNode.id][this.className] = this.innerHTML;
+              }
             }
             personTr.appendChild(td);
           }
@@ -588,13 +599,22 @@
           td.contentEditable = "false";
           var select = document.createElement("select");
           select.id = "select";
-          for (var i = 1; i < 6; i++) {
+          for (var i = 0; i < 6; i++) {
             var option = document.createElement("option");
-            option.value = i;
-            option.innerHTML = i;
+            if (i == 0) {
+              option.value = "";
+              option.innerHTML = "";
+            } else {
+              option.value = i;
+              option.innerHTML = i;
+            }
             select.appendChild(option);
           }
           td.appendChild(select);
+          select.value = "";
+          select.onchange = function() {
+            data[this.parentNode.parentNode.id]["Flag"] = this.value;
+          }
         } else {
           td.innerHTML = " "; //设置显示的数据，可以是标签．
           newPerson[key] = " ";
