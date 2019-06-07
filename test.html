@@ -130,10 +130,7 @@
       border-radius: 5px;
       padding: 3px;
       box-shadow: 0 1px 0.5rem rgba(0, 0, 0, 0.1);
-    }
-
-    div.mix:hover {
-      background-color: #eeeeee;
+      background-color: #fff;
     }
 
     #numTeamInput {
@@ -572,7 +569,6 @@
 
           for (var index = 0; index < cks.length; index++) {
             if (cks[index].checked == true) {
-
               var checkedF = cks[index].value;
               mixF.push(checkedF);
               var featureObj = new Object();
@@ -582,12 +578,10 @@
                   featureObj[featureValue] = "0";
                 }
               }
-              // console.log(featureObj);
               if (numChecked > 0) {
                 dataRan = dataSort.slice();
                 dataSort = new Array();
               }
-              // console.log(dataRan);
               for (var featureKey in featureObj) {
                 var keyObj = new Array();
                 for (var i = 0; i < numPeople; i++) {
@@ -597,17 +591,14 @@
                 }
                 dataSort = dataSort.concat(keyObj);
               }
-              // console.log(dataSort);
               numChecked++;
             }
           }
 
           dataCopy = data.slice();
           numPeople = data.length;
-          // var teams = new Array(numTeam);
           var numInATeam = Math.ceil(numPeople / numTeam);
           for (var i = 0; i < numTeam; i++) { //一维长度为i,i为变量，可以根据实际情况改变
-            // teams[i] = new Array(numInATeam); //声明二维，每一个一维数组里面的一个元素都是一个数组；
             var team = document.createElement('div');
             team.className = "team";
             team.innerHTML = "<strong>Team " + (i + 1) + "</strong>";
@@ -620,7 +611,6 @@
               person.className = "person";
               if (mixF.length == 0) {
                 var randomIndex = Math.floor(Math.random() * numPeople);
-                // person.id = randomIndex + "Person";
                 for (var key in data[randomIndex]) {
                   var personF = document.createElement('p');
                   personF.className = "personF";
@@ -656,7 +646,6 @@
 
               var team = document.getElementById(i + "Team");
               team.appendChild(person);
-              // teams[i][j] = dataCopy[randomIndex];
               numPeople--;
               if (numPeople <= 0) {
                 break;
