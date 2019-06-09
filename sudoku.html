@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style media="screen">
+    html {
+      font-family: sans-serif;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .numbers,
+    .operation {
+      display: flex;
+      justify-content: center;
+      align-items: Center;
+    }
+
+    .numbers :hover {
+      background-color: #1f5ec1;
+      color: #fff;
+    }
+
+    .number,
+    .button {
+      display: flex;
+      justify-content: center;
+      align-items: Center;
+      margin: 10px;
+      min-width: 2rem;
+      width: 2rem;
+      height: 2rem;
+      border: 1px solid #375fef;
+      border-radius: 5px;
+    }
+
+    .button {
+      width: 2rem;
+      height: 2rem;
+      border: 0;
+      background-color: #7babf7;
+    }
+
+    .button:hover {
+      background-color: #b7d3ff;
+    }
+
+    .board {
+      width: 452px;
+      height: 450px;
+      margin: 20px auto;
+    }
+
+    .sections {
+      justify-content: center;
+      align-items: Center;
+      border: 1px solid #375fef;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 0px;
+    }
+
+    .section {
+      width: 150px;
+      height: 150px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 0px;
+    }
+
+    #sec0,
+    #sec2,
+    #sec4,
+    #sec6,
+    #sec8 {
+      background-color: #d2ddef;
+    }
+
+    .slot,
+    .slotConflict {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      justify-content: center;
+      align-items: Center;
+      font-size: 2rem;
+      border: 1px solid #375fef;
+    }
+
+    .slot:hover,
+    .slotConflict:hover {
+      background-color: #1f5ec1;
+      color: #fff;
+    }
+
+    .slotConflict {
+      background-color: rgba(86, 92, 102, 0.2);
+    }
+  </style>
+  <script type="text/javascript">
+    var puzzle = [
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+    window.onload = function() {
+      var secs = document.getElementById("sections");
+      for (var i = 0; i < 9; i++) {
+        var sec = document.createElement("div");
+        sec.className = "section";
+        sec.id = "sec" + i;
+        for (var j = 0; j < 9; j++) {
+          var slot = document.createElement("div");
+          slot.className = "slot";
+          var row = Math.floor(i / 3) * 3 + Math.floor(j / 3);
+          var column = i % 3 * 3 + j % 3;
+          slot.id = row + "" + column;
+          slot.onmouseover = function() {
+            var r = this.id.slice(0, 1);
+            var c = this.id.slice(1, 2);
+            for (var k = 0; k < 9; k++) {
+              document.getElementById(r + k).className = "slotConflict";
+              document.getElementById(k + c).className = "slotConflict";
+            }
+          }
+          slot.onmouseout = function() {
+            var r = this.id.slice(0, 1);
+            var c = this.id.slice(1, 2);
+            for (var k = 0; k < 9; k++) {
+              document.getElementById(r + k).className = "slot";
+              document.getElementById(k + c).className = "slot";
+            }
+          }
+          sec.appendChild(slot);
+        }
+        secs.appendChild(sec);
+      }
+      var hard = [
+        [8, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 3, 6, 0, 0, 0, 0, 0],
+        [0, 7, 0, 0, 9, 0, 2, 0, 0],
+        [0, 5, 0, 0, 0, 7, 0, 0, 0],
+        [0, 0, 0, 0, 4, 5, 7, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 3, 0],
+        [0, 0, 1, 0, 0, 0, 0, 6, 8],
+        [0, 0, 8, 5, 0, 0, 0, 1, 0],
+        [0, 9, 0, 0, 0, 0, 4, 0, 0]
+      ];
+      for (var i = 0; i < 9; i++) {
+        for (var j = 0; j < 9; j++) {
+          var slot = document.getElementById(i + "" + j);
+          if (hard[i][j] != 0) {
+            slot.innerHTML = hard[i][j];
+            slot.style.fontWeight = "bold";
+          }
+        }
+      }
+      var solution = document.getElementById("solution");
+      solution.onclick = function() {
+        for (var i = 0; i < 9; i++) {
+          for (var j = 0; j < 9; j++) {
+            var slot = document.getElementById(i + "" + j);
+            var puzzleSlot = new Slot(i, j, parseInt(slot.innerHTML));
+            puzzle[i][j] = puzzleSlot;
+          }
+        }
+        console.log(puzzle);
+        puzzle[2][0].value = 7;
+        var x = puzzle[2][1];
+        console.log(x);
+        var y = x.checkConflict();
+        console.log(y);
+      }
+      var reset = document.getElementById("reset");
+      reset.onclick = function() {
+        for (var i = 0; i < 9; i++) {
+          for (var j = 0; j < 9; j++) {
+            var slotName = i + "" + j;
+            var slot = document.getElementById(slotName);
+            slot.innerHTML = "";
+          }
+        }
+      }
+    }
+
+    function Slot(r, c, v) {
+      this.row = r;
+      this.column = c;
+      this.familyR = parseInt(r / 3) * 3;
+      this.familyC = parseInt(c / 3) * 3;
+      if (isNaN(v)) {
+        this.value = 0
+      } else {
+        this.value = v;
+      }
+      this.candidate = new Array();
+    }
+    Slot.prototype.checkConflict = function checkConflictFunction() {
+      var c = this.column;
+      var r = this.row;
+      var value = this.value;
+      if (value == 0) {
+        return false;
+      }
+      for (var k = 0; k < 9; k++) {
+        if (k != c && puzzle[r][k].value == value) {
+          return true;
+        }
+        if (k != r && puzzle[k][c].value == value) {
+          return true;
+        }
+        var fR = this.familyR + Math.floor(k / 3);
+        var fC = this.familyC + k % 3;
+        if (!(c == fC && r == fR) && puzzle[fR][fC].value == value) {
+          return true;
+        }
+      }
+      return false;
+    }
+  </script>
+</head>
+
+<body>
+  <div class="">
+    <div class="board" id="board">
+      <div class="sections" id="sections">
+      </div>
+    </div>
+    <div class="buttons">
+      <div class="numbers">
+        <div class="number" id="number1">
+          1
+        </div>
+        <div class="number" id="number2">
+          2
+        </div>
+        <div class="number" id="number3">
+          3
+        </div>
+        <div class="number" id="number4">
+          4
+        </div>
+        <div class="number" id="number5">
+          5
+        </div>
+        <div class="number" id="number6">
+          6
+        </div>
+        <div class="number" id="number7">
+          7
+        </div>
+        <div class="number" id="number8">
+          8
+        </div>
+        <div class="number" id="number9">
+          9
+        </div>
+        <div class="number" id="backward">
+          /
+        </div>
+      </div>
+      <div class="operation">
+        <input type="button" class="button" id="solution">
+        <p for="solution">Solution</p>
+        <input type="button" class="button" id="reset">
+        <p for="reset">Reset</p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
