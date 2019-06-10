@@ -156,11 +156,34 @@
         [0, 0, 8, 5, 0, 0, 0, 1, 0],
         [0, 9, 0, 0, 0, 0, 4, 0, 0]
       ];
+      var easy = [
+        [5, 1, 7, 6, 0, 0, 0, 3, 4],
+        [2, 8, 9, 0, 0, 4, 0, 0, 0],
+        [3, 4, 6, 2, 0, 5, 0, 9, 0],
+        [6, 0, 2, 0, 0, 0, 0, 1, 0],
+        [0, 3, 8, 0, 0, 6, 0, 4, 7],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 9, 0, 0, 0, 0, 0, 7, 8],
+        [7, 0, 3, 4, 0, 0, 5, 6, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      ];
+      var easy2 = [
+        [5, 1, 7, 6, 0, 0, 0, 3, 4],
+        [0, 8, 9, 0, 0, 4, 0, 0, 0],
+        [3, 0, 6, 2, 0, 5, 0, 9, 0],
+        [6, 0, 0, 0, 0, 0, 0, 1, 0],
+        [0, 3, 0, 0, 0, 6, 0, 4, 7],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 9, 0, 0, 0, 0, 0, 7, 8],
+        [7, 0, 3, 4, 0, 0, 5, 6, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      ];
+      var sample = easy2;
       for (var i = 0; i < 9; i++) {
         for (var j = 0; j < 9; j++) {
           var slot = document.getElementById(i + "" + j);
-          if (hard[i][j] != 0) {
-            slot.innerHTML = hard[i][j];
+          if (sample[i][j] != 0) {
+            slot.innerHTML = sample[i][j];
             slot.style.fontWeight = "bold";
           }
         }
@@ -170,21 +193,26 @@
         for (var i = 0; i < 9; i++) {
           for (var j = 0; j < 9; j++) {
             var slot = document.getElementById(i + "" + j);
+            if (slot.innerHTML == "") {
+              slot.style.color = "#146eff";
+            }
             var puzzleSlot = new Slot(i, j, parseInt(slot.innerHTML));
             puzzle[i][j] = puzzleSlot;
           }
         }
         console.log(puzzle);
-        // puzzle[0][1].value = 1;
-        // var x = puzzle[2][2];
+        // puzzle[0][1].value = 6;
+        // var x = puzzle[0][1];
         // console.log(x);
-        // x.findCandidate();
-        findAllCandidate();
-
-        console.log(puzzle);
-        findSolution();
-
-        console.log(puzzle);
+        // console.log(x.findCandidate());
+        // console.log(x.checkConflict());
+        if (findAllCandidate()) {
+          console.log("wrong puzzle");
+        } else {
+          console.log(emptyList);
+          // findSolution();
+          console.log(puzzle);
+        }
         //
         // if (typeof(findNextEmpty(puzzle)) == "undefined") {
         //   console.log("no more");
@@ -240,35 +268,71 @@
     }
 
     Slot.prototype.findCandidate = function findCandidateFunction() {
+      this.candidate = [];
       for (var i = 1; i < 10; i++) {
         this.value = i;
         if (!this.checkConflict()) {
           this.candidate.push(i)
         };
       }
-      this.value = 0;
+      if (this.candidate.length == 1) {
+        this.value = this.candidate[0];
+        var r = this.row;
+        var c = this.column;
+        var slot = document.getElementById(r + "" + c);
+        slot.innerHTML = this.value;
+      } else {
+        this.value = 0;
+      }
+      return this.candidate.length;
     }
 
     function findSolution() {
-      while (emptyList.length > 0) {
+      if (emptyList.length == 0) {
+        return true;
+      } else if (emptyList.length > 0) {
         var currentSlot = findNextEmpty(puzzle);
-        var attemptValue = currentSlot.candidate.pop();
-        currentSlot.value = attemptValue;
-        if (currentSlot.checkConflict()) {
-          currentSlot.candidate.push(attemptValue);
-          emptyList.push(currentSlot);
-        } else {
-          findSolution();
-        };
+        var usedValue = currentSlot.candidate.slice();
+        while (currentSlot.candidate.length > 0) {
+          var attemptValue = currentSlot.candidate.pop();
+          currentSlot.value = attemptValue;
+          if (!currentSlot.checkConflict()) {
+            var r = currentSlot.row;
+            var c = currentSlot.column;
+            var slot = document.getElementById(r + "" + c);
+            slot.innerHTML = currentSlot.value;
+            findSolution();
+          }
+        }
+        currentSlot.value = 0;
+        currentSlot.candidate = usedValue.slice();
+        emptyList.push(currentSlot);
       }
     }
 
     function findAllCandidate() {
-      var emptyListCopy = emptyList.slice();
-      while (emptyListCopy.length > 0) {
-        emptyListCopy.pop().findCandidate();
+      var done = false;
+      while (!done) {
+        done = true;
+        var emptyListCopy = emptyList.slice();
+        var newEmptyList = new Array();
+        while (emptyListCopy.length > 0) {
+          var emptySlot = emptyListCopy.pop();
+          var candidateLength = emptySlot.findCandidate();
+          if (candidateLength == 0) {
+            return true;
+          } else if (candidateLength == 1) {
+            emptySlot.candidate = [];
+            done = false;
+          } else {
+            newEmptyList.push(emptySlot);
+          }
+        }
+        emptyList = newEmptyList;
       }
+      return false;
     }
+
 
     function findNextEmpty(puzzle) {
       if (emptyList.length > 0) {
