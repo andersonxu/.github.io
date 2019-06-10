@@ -175,11 +175,20 @@
           }
         }
         console.log(puzzle);
-        puzzle[2][0].value = 7;
-        var x = puzzle[2][1];
-        console.log(x);
-        var y = x.checkConflict();
-        console.log(y);
+        // puzzle[0][1].value = 1;
+        // var x = puzzle[2][2];
+        // console.log(x);
+        // x.findCandidate();
+        findAllCandidate();
+
+        console.log(puzzle);
+        findSolution();
+
+        console.log(puzzle);
+        //
+        // if (typeof(findNextEmpty(puzzle)) == "undefined") {
+        //   console.log("no more");
+        // }
       }
       var reset = document.getElementById("reset");
       reset.onclick = function() {
@@ -192,6 +201,7 @@
         }
       }
     }
+    emptyList = new Array();
 
     function Slot(r, c, v) {
       this.row = r;
@@ -200,6 +210,7 @@
       this.familyC = parseInt(c / 3) * 3;
       if (isNaN(v)) {
         this.value = 0
+        emptyList.push(this);
       } else {
         this.value = v;
       }
@@ -226,6 +237,45 @@
         }
       }
       return false;
+    }
+
+    Slot.prototype.findCandidate = function findCandidateFunction() {
+      for (var i = 1; i < 10; i++) {
+        this.value = i;
+        if (!this.checkConflict()) {
+          this.candidate.push(i)
+        };
+      }
+      this.value = 0;
+    }
+
+    function findSolution() {
+      while (emptyList.length > 0) {
+        var currentSlot = findNextEmpty(puzzle);
+        var attemptValue = currentSlot.candidate.pop();
+        currentSlot.value = attemptValue;
+        if (currentSlot.checkConflict()) {
+          currentSlot.candidate.push(attemptValue);
+          emptyList.push(currentSlot);
+        } else {
+          findSolution();
+        };
+      }
+    }
+
+    function findAllCandidate() {
+      var emptyListCopy = emptyList.slice();
+      while (emptyListCopy.length > 0) {
+        emptyListCopy.pop().findCandidate();
+      }
+    }
+
+    function findNextEmpty(puzzle) {
+      if (emptyList.length > 0) {
+        return emptyList.pop();
+      } else {
+        return undefined;
+      }
     }
   </script>
 </head>
