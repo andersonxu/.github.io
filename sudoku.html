@@ -200,7 +200,7 @@
         [0, 0, 4, 0, 0, 0, 0, 3, 0],
         [0, 0, 0, 0, 0, 9, 7, 0, 0]
       ];
-      var sample = diff;
+      var sample = hard2;
       for (var i = 0; i < 9; i++) {
         for (var j = 0; j < 9; j++) {
           var slot = document.getElementById(i + "" + j);
@@ -222,11 +222,9 @@
             puzzle[i][j] = puzzleSlot;
           }
         }
-        console.log(puzzle);
-        console.log(findAllCandidate());
-        // findAllCandidate();
+        backtracks = 0;
         findSolution();
-        console.log(puzzle);
+        console.log(backtracks);
       }
       var reset = document.getElementById("reset");
       reset.onclick = function() {
@@ -277,7 +275,6 @@
       }
       return false;
     }
-
     Slot.prototype.findCandidate = function findCandidateFunction() {
       this.candidate = [];
       for (var i = 1; i < 10; i++) {
@@ -298,20 +295,16 @@
     }
 
     function findSolution() {
-      console.log("empty");
+      findAllCandidate();
       var currentSlot = findNextEmpty(puzzle);
       if (currentSlot == undefined) {
-        console.log("ei???");
         return true;
       } else {
         for (var canIndex in currentSlot.candidate) {
           var attemptValue = currentSlot.candidate[canIndex];
-          console.log(currentSlot);
-          console.log(attemptValue);
           currentSlot.value = attemptValue;
           currentSlot.findSlot().innerHTML = currentSlot.value;
           var assumptionList = findAllCandidate();
-          console.log(assumptionList);
           if (findSolution()) {
             return true;
           };
@@ -319,7 +312,9 @@
             assumptionList[index].value = 0;
             assumptionList[index].findSlot().innerHTML = "";
           }
-          console.log("dead");
+          backtracks += 1
+          currentSlot.value = 0;
+          currentSlot.findSlot().innerHTML = "";
         }
         return false;
       }
@@ -346,7 +341,6 @@
       return assumptionList;
     }
 
-
     function findNextEmpty(puzzle) {
       for (var i = 0; i < 9; i++) {
         for (var j = 0; j < 9; j++) {
@@ -356,16 +350,6 @@
         }
       }
       return undefined;
-    }
-
-    function sleep(numberMillis) {
-      var now = new Date();
-      var exitTime = now.getTime() + numberMillis;
-      while (true) {
-        now = new Date();
-        if (now.getTime() > exitTime)
-          return;
-      }
     }
   </script>
 </head>
