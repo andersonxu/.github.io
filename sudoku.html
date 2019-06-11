@@ -313,7 +313,12 @@
             var slot = document.getElementById(slotName);
             slot.innerHTML = "";
             slot.style.color = "#000";
+
           }
+        }
+        for (var i = 1; i < 10; i++) {
+          document.getElementById(i).style.backgroundColor = "#fff";
+          document.getElementById(i).style.color = "#000";
         }
       }
       var numbers = document.getElementById("numbers");
@@ -326,33 +331,7 @@
           number.innerHTML = "&larr;";
         }
         number.onclick = function() {
-          if (currentId != undefined) {
-            var r = currentId.slice(0, 1);
-            var c = currentId.slice(1, 2);
-            // var puzzleSlot = new Slot(r, c, 0);
-            // puzzle[r][c] = puzzleSlot;
-            // var candidate = puzzleSlot.findCandidate();
-            // for (var key in candidate) {
-            //   document.getElementById(candidate[key]).style.color = "#fff";
-            // }
-            var currentSlot = document.getElementById(currentId);
-            var number = parseInt(this.innerHTML);
-            if (!isNaN(number)) {
-              currentSlot.innerHTML = number;
-              currentSlot.className = "filled";
-              var puzzleSlot = new Slot(r, c, number);
-              puzzle[r][c] = puzzleSlot;
-              if (puzzleSlot.checkConflict()) {
-                currentSlot.innerHTML = "";
-                currentSlot.className = "selected";
-                puzzle[r][c] = new Slot(r, c, 0);
-              };
-            } else {
-              puzzle[r][c] = new Slot(r, c, 0);
-              currentSlot.innerHTML = "";
-              currentSlot.className = "selected";
-            }
-          }
+          inputNumber(parseInt(this.innerHTML));
         }
         numbers.appendChild(number);
       }
@@ -468,6 +447,38 @@
         }
       }
       return undefined;
+    }
+
+    document.onkeydown = function(e) {
+      var keyNum = window.event ? e.keyCode : e.which;
+      if (keyNum >= 49 && keyNum <= 57) {
+        inputNumber(keyNum - 48);
+      } else {
+        inputNumber(NaN);
+      }
+    }
+
+    function inputNumber(number) {
+      if (currentId != undefined) {
+        var r = currentId.slice(0, 1);
+        var c = currentId.slice(1, 2);
+        var currentSlot = document.getElementById(currentId);
+        if (!isNaN(number)) {
+          currentSlot.innerHTML = number;
+          currentSlot.className = "filled";
+          var puzzleSlot = new Slot(r, c, number);
+          puzzle[r][c] = puzzleSlot;
+          if (puzzleSlot.checkConflict()) {
+            currentSlot.innerHTML = "";
+            currentSlot.className = "selected";
+            puzzle[r][c] = new Slot(r, c, 0);
+          };
+        } else {
+          puzzle[r][c] = new Slot(r, c, 0);
+          currentSlot.innerHTML = "";
+          currentSlot.className = "selected";
+        }
+      }
     }
   </script>
 </head>
