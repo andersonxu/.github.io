@@ -204,8 +204,8 @@
       for (var i = 0; i < 9; i++) {
         for (var j = 0; j < 9; j++) {
           var slot = document.getElementById(i + "" + j);
-          if (sample[i][j] != 0) {
-            slot.innerHTML = sample[i][j];
+          if (hard[i][j] != 0) {
+            slot.innerHTML = hard[i][j];
             slot.style.fontWeight = "bold";
           }
         }
@@ -215,9 +215,6 @@
         for (var i = 0; i < 9; i++) {
           for (var j = 0; j < 9; j++) {
             var slot = document.getElementById(i + "" + j);
-            if (slot.innerHTML == "") {
-              slot.style.color = "#146eff";
-            }
             var puzzleSlot = new Slot(i, j, parseInt(slot.innerHTML));
             puzzle[i][j] = puzzleSlot;
           }
@@ -276,7 +273,6 @@
       return false;
     }
     Slot.prototype.findCandidate = function findCandidateFunction() {
-      this.candidate = [];
       for (var i = 1; i < 10; i++) {
         this.value = i;
         if (!this.checkConflict()) {
