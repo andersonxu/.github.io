@@ -156,6 +156,17 @@
         [0, 0, 8, 5, 0, 0, 0, 1, 0],
         [0, 9, 0, 0, 0, 0, 4, 0, 0]
       ];
+      var hard2 = [
+        [8, 5, 0, 0, 0, 2, 4, 0, 0],
+        [7, 2, 0, 0, 0, 0, 0, 0, 9],
+        [0, 0, 4, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 7, 0, 0, 2],
+        [3, 0, 5, 0, 0, 0, 9, 0, 0],
+        [0, 4, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 8, 0, 0, 7, 0],
+        [0, 1, 7, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 3, 6, 0, 4, 0]
+      ];
       var easy = [
         [5, 1, 7, 6, 0, 0, 0, 3, 4],
         [2, 8, 9, 0, 0, 4, 0, 0, 0],
@@ -178,7 +189,18 @@
         [7, 0, 3, 4, 0, 0, 5, 6, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0]
       ];
-      var sample = easy2;
+      diff = [
+        [0, 0, 5, 3, 0, 0, 0, 0, 0],
+        [8, 0, 0, 0, 0, 0, 0, 2, 0],
+        [0, 7, 0, 0, 1, 0, 5, 0, 0],
+        [4, 0, 0, 0, 0, 5, 3, 0, 0],
+        [0, 1, 0, 0, 7, 0, 0, 0, 6],
+        [0, 0, 3, 2, 0, 0, 0, 8, 0],
+        [0, 6, 0, 5, 0, 0, 0, 0, 9],
+        [0, 0, 4, 0, 0, 0, 0, 3, 0],
+        [0, 0, 0, 0, 0, 9, 7, 0, 0]
+      ];
+      var sample = diff;
       for (var i = 0; i < 9; i++) {
         for (var j = 0; j < 9; j++) {
           var slot = document.getElementById(i + "" + j);
@@ -201,22 +223,10 @@
           }
         }
         console.log(puzzle);
-        // puzzle[0][1].value = 6;
-        // var x = puzzle[0][1];
-        // console.log(x);
-        // console.log(x.findCandidate());
-        // console.log(x.checkConflict());
-        if (findAllCandidate()) {
-          console.log("wrong puzzle");
-        } else {
-          console.log(emptyList);
-          // findSolution();
-          console.log(puzzle);
-        }
-        //
-        // if (typeof(findNextEmpty(puzzle)) == "undefined") {
-        //   console.log("no more");
-        // }
+        console.log(findAllCandidate());
+        // findAllCandidate();
+        findSolution();
+        console.log(puzzle);
       }
       var reset = document.getElementById("reset");
       reset.onclick = function() {
@@ -229,7 +239,6 @@
         }
       }
     }
-    emptyList = new Array();
 
     function Slot(r, c, v) {
       this.row = r;
@@ -238,11 +247,13 @@
       this.familyC = parseInt(c / 3) * 3;
       if (isNaN(v)) {
         this.value = 0
-        emptyList.push(this);
       } else {
         this.value = v;
       }
       this.candidate = new Array();
+    }
+    Slot.prototype.findSlot = function findSlotFunction() {
+      return document.getElementById(this.row + "" + this.column);
     }
     Slot.prototype.checkConflict = function checkConflictFunction() {
       var c = this.column;
@@ -277,68 +288,83 @@
       }
       if (this.candidate.length == 1) {
         this.value = this.candidate[0];
-        var r = this.row;
-        var c = this.column;
-        var slot = document.getElementById(r + "" + c);
-        slot.innerHTML = this.value;
+        this.findSlot().innerHTML = this.value;
       } else {
         this.value = 0;
+        // this.findSlot().style.fontSize = "10px";
+        // this.findSlot().innerHTML = this.candidate;
       }
       return this.candidate.length;
     }
 
     function findSolution() {
-      if (emptyList.length == 0) {
+      console.log("empty");
+      var currentSlot = findNextEmpty(puzzle);
+      if (currentSlot == undefined) {
+        console.log("ei???");
         return true;
-      } else if (emptyList.length > 0) {
-        var currentSlot = findNextEmpty(puzzle);
-        var usedValue = currentSlot.candidate.slice();
-        while (currentSlot.candidate.length > 0) {
-          var attemptValue = currentSlot.candidate.pop();
+      } else {
+        for (var canIndex in currentSlot.candidate) {
+          var attemptValue = currentSlot.candidate[canIndex];
+          console.log(currentSlot);
+          console.log(attemptValue);
           currentSlot.value = attemptValue;
-          if (!currentSlot.checkConflict()) {
-            var r = currentSlot.row;
-            var c = currentSlot.column;
-            var slot = document.getElementById(r + "" + c);
-            slot.innerHTML = currentSlot.value;
-            findSolution();
+          currentSlot.findSlot().innerHTML = currentSlot.value;
+          var assumptionList = findAllCandidate();
+          console.log(assumptionList);
+          if (findSolution()) {
+            return true;
+          };
+          for (var index in assumptionList) {
+            assumptionList[index].value = 0;
+            assumptionList[index].findSlot().innerHTML = "";
           }
+          console.log("dead");
         }
-        currentSlot.value = 0;
-        currentSlot.candidate = usedValue.slice();
-        emptyList.push(currentSlot);
+        return false;
       }
     }
 
     function findAllCandidate() {
       var done = false;
+      var assumptionList = new Array();
       while (!done) {
         done = true;
-        var emptyListCopy = emptyList.slice();
-        var newEmptyList = new Array();
-        while (emptyListCopy.length > 0) {
-          var emptySlot = emptyListCopy.pop();
-          var candidateLength = emptySlot.findCandidate();
-          if (candidateLength == 0) {
-            return true;
-          } else if (candidateLength == 1) {
-            emptySlot.candidate = [];
-            done = false;
-          } else {
-            newEmptyList.push(emptySlot);
+        for (var i = 0; i < 9; i++) {
+          for (var j = 0; j < 9; j++) {
+            if (puzzle[i][j].value == 0) {
+              puzzle[i][j].findCandidate();
+              if (puzzle[i][j].candidate.length == 1) {
+                puzzle[i][j].candidate = [];
+                assumptionList.push(puzzle[i][j]);
+                done = false;
+              }
+            }
           }
         }
-        emptyList = newEmptyList;
       }
-      return false;
+      return assumptionList;
     }
 
 
     function findNextEmpty(puzzle) {
-      if (emptyList.length > 0) {
-        return emptyList.pop();
-      } else {
-        return undefined;
+      for (var i = 0; i < 9; i++) {
+        for (var j = 0; j < 9; j++) {
+          if (puzzle[i][j].value == 0) {
+            return puzzle[i][j];
+          }
+        }
+      }
+      return undefined;
+    }
+
+    function sleep(numberMillis) {
+      var now = new Date();
+      var exitTime = now.getTime() + numberMillis;
+      while (true) {
+        now = new Date();
+        if (now.getTime() > exitTime)
+          return;
       }
     }
   </script>
