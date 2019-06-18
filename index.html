@@ -76,9 +76,10 @@
     }
 
     .flip {
-      width: 400px;
-      height: 400px;
+      width: 350px;
+      height: 350px;
       perspective: 600px;
+      cursor: pointer;
     }
 
     .flip>div {
@@ -88,10 +89,12 @@
     }
 
     .front {
+      cursor: pointer;
       transform: rotateY(0deg);
     }
 
     .back {
+      cursor: pointer;
       position: absolute;
       left: 0;
       top: 0;
