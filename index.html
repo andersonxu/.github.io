@@ -156,31 +156,11 @@
       function frontTouchStart(event) {
         $("#portraitFront").css("transform", "rotateY(180deg)");
         $("#portraitBack").css("transform", "rotateY(360deg)");
-        $("#portraitFront").hover(function() {
-          $("#portraitFront").css("transform", "rotateY(225deg)");
-        }, function() {
-          $("#portraitFront").css("transform", "rotateY(180deg)");
-        });
-        $("#portraitBack").hover(function() {
-          $("#portraitBack").css("transform", "rotateY(415deg)");
-        }, function() {
-          $("#portraitBack").css("transform", "rotateY(360deg)");
-        });
       }
 
       function backTouchStart(event) {
         $("#portraitFront").css("transform", "rotateY(0deg)");
         $("#portraitBack").css("transform", "rotateY(180deg)");
-        $("#portraitFront").hover(function() {
-          $("#portraitFront").css("transform", "rotateY(45deg)");
-        }, function() {
-          $("#portraitFront").css("transform", "rotateY(0deg)");
-        });
-        $("#portraitBack").hover(function() {
-          $("#portraitBack").css("transform", "rotateY(225deg)");
-        }, function() {
-          $("#portraitBack").css("transform", "rotateY(180deg)");
-        });
       }
 
       $("#portraitFront").click(function() {
