@@ -106,6 +106,7 @@
       transform: rotateY(180deg);
     }
 
+    /* 
     .flip:hover .front {
       cursor: pointer;
       transform: rotateY(45deg);
@@ -114,7 +115,7 @@
     .flip:hover .back {
       cursor: pointer;
       transform: rotateY(225deg);
-    }
+    } */
   </style>
   <script type="text/javascript">
     $(document).ready(function() {
@@ -168,31 +169,11 @@
         e.stopImmediatePropagation();
         $("#portraitFront").css("transform", "rotateY(180deg)");
         $("#portraitBack").css("transform", "rotateY(360deg)");
-        $("#portraitFront").hover(function() {
-          $("#portraitFront").css("transform", "rotateY(225deg)");
-        }, function() {
-          $("#portraitFront").css("transform", "rotateY(180deg)");
-        });
-        $("#portraitBack").hover(function() {
-          $("#portraitBack").css("transform", "rotateY(415deg)");
-        }, function() {
-          $("#portraitBack").css("transform", "rotateY(360deg)");
-        });
       });
       $(document).on("click", "#portraitBack", function(e) {
         e.stopImmediatePropagation();
         $("#portraitFront").css("transform", "rotateY(0deg)");
         $("#portraitBack").css("transform", "rotateY(180deg)");
-        $("#portraitFront").hover(function() {
-          $("#portraitFront").css("transform", "rotateY(45deg)");
-        }, function() {
-          $("#portraitFront").css("transform", "rotateY(0deg)");
-        });
-        $("#portraitBack").hover(function() {
-          $("#portraitBack").css("transform", "rotateY(225deg)");
-        }, function() {
-          $("#portraitBack").css("transform", "rotateY(180deg)");
-        });
       });
 
       $("#portraitFront").click(function() {
