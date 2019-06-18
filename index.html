@@ -150,7 +150,10 @@
       // Collapse the navbar when page is scrolled
       $(window).scroll(navbarCollapse);
       $("#portrait").addClass("load");
-      $(".flip").on("click", "#portraitFront", function() {
+      $("#portraitFront").on("touchstart", frontTouchStart);
+
+
+      function frontTouchStart(event) {
         $("#portraitFront").css("transform", "rotateY(180deg)");
         $("#portraitBack").css("transform", "rotateY(360deg)");
         $("#portraitFront").hover(function() {
@@ -163,8 +166,9 @@
         }, function() {
           $("#portraitBack").css("transform", "rotateY(360deg)");
         });
-      });
-      $(".flip").on("click", "#portraitBack", function() {
+      }
+
+      function backTouchStart(event) {
         $("#portraitFront").css("transform", "rotateY(0deg)");
         $("#portraitBack").css("transform", "rotateY(180deg)");
         $("#portraitFront").hover(function() {
@@ -177,7 +181,8 @@
         }, function() {
           $("#portraitBack").css("transform", "rotateY(180deg)");
         });
-      });
+      }
+
       $("#portraitFront").click(function() {
         $("#portraitFront").css("transform", "rotateY(180deg)");
         $("#portraitBack").css("transform", "rotateY(360deg)");
