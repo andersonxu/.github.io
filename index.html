@@ -28,8 +28,8 @@
     }
 
     header.masthead {
-      padding-top: calc(5rem + 66px);
-      padding-bottom: 5rem;
+      padding-top: calc(3rem + 66px);
+      padding-bottom: 3rem;
     }
 
     .navbar {
@@ -41,7 +41,7 @@
     }
 
     hr.divider {
-      max-width: 3.25rem;
+      max-width: 4rem;
       border-width: 0.2rem;
       border-color: #F7882F;
     }
@@ -49,9 +49,29 @@
     hr.light {
       border-color: #fff;
     }
+
+    header.masthead h1 {
+      font-size: 4rem;
+    }
+
+    #portrait {
+      opacity: 0;
+      margin-top: 25px;
+      font-size: 21px;
+      text-align: center;
+      -webkit-transition: opacity 1s ease-in;
+      -moz-transition: opacity 1s ease-in;
+      -o-transition: opacity 1s ease-in;
+      -ms-transition: opacity 1s ease-in;
+      transition: opacity 1s ease-in;
+    }
+
+    #portrait.load {
+      opacity: 1;
+    }
   </style>
   <script type="text/javascript">
-    $(function() {
+    $(document).ready(function() {
       $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
         if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
           var target = $(this.hash);
@@ -85,6 +105,7 @@
       navbarCollapse();
       // Collapse the navbar when page is scrolled
       $(window).scroll(navbarCollapse);
+      $("#portrait").addClass("load");
     });
   </script>
   <!--
@@ -120,10 +141,20 @@
     </div>
   </nav>
   <header class="masthead bg-light text-white text-center" id="about">
-    <div class="container"><img class="img-fluid d-block mx-auto mb-5" src="imgs/portrait.jpg" width="400" height="400">
-      <h1>Zheng Xu</h1>
+    <div class="container"><img class="img-fluid d-block mx-auto mb-5 rounded-circle" src="imgs/portrait.jpg" width="400" height="400" id="portrait">
+      <h1 class="text-uppercase">Zheng Xu</h1>
       <hr class="divider  my-4">
-      <h2 class="font-weight-light mb-0">Web Developer - Programmer - Graphic Artist</h2>
+      <ul class="list-inline">
+        <li class="list-inline-item">
+          <h2 class="font-weight-normal">&lt;Web Developer&gt;</h2>
+        </li>
+        <li class="list-inline-item">
+          <h2 class="font-weight-normal">&lt;Programmer&gt;</h2>
+        </li>
+        <li class="list-inline-item">
+          <h2 class="font-weight-normal">&lt;Graphic Artist&gt;</h2>
+        </li>
+      </ul>
     </div>
   </header>
   <section class="page-section bg-primary" id="project">
