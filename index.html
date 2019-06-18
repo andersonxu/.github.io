@@ -106,7 +106,7 @@
       transform: rotateY(180deg);
     }
 
-    /* .flip:hover .front {
+    .flip:hover .front {
       cursor: pointer;
       transform: rotateY(45deg);
     }
@@ -114,7 +114,7 @@
     .flip:hover .back {
       cursor: pointer;
       transform: rotateY(225deg);
-    } */
+    }
 
     img {
       cursor: pointer;
@@ -160,44 +160,34 @@
       // Collapse the navbar when page is scrolled
       $(window).scroll(navbarCollapse);
       $("#portrait").addClass("load");
-      // $(document).on("click", "#portraitFront", function(e) {
-      //   e.stopImmediatePropagation();
-      //   $("#portraitFront").css("transform", "rotateY(180deg)");
-      //   $("#portraitBack").css("transform", "rotateY(360deg)");
-      // });
-      // $(document).on("click", "#portraitBack", function(e) {
-      //   e.stopImmediatePropagation();
-      //   $("#portraitFront").css("transform", "rotateY(0deg)");
-      //   $("#portraitBack").css("transform", "rotateY(180deg)");
-      // });
 
       $("#portraitFront").click(function() {
         $("#portraitFront").css("transform", "rotateY(180deg)");
         $("#portraitBack").css("transform", "rotateY(360deg)");
-        // $("#portraitFront").hover(function() {
-        //   $("#portraitFront").css("transform", "rotateY(225deg)");
-        // }, function() {
-        //   $("#portraitFront").css("transform", "rotateY(180deg)");
-        // });
-        // $("#portraitBack").hover(function() {
-        //   $("#portraitBack").css("transform", "rotateY(415deg)");
-        // }, function() {
-        //   $("#portraitBack").css("transform", "rotateY(360deg)");
-        // });
+        $("#portraitFront").hover(function() {
+          $("#portraitFront").css("transform", "rotateY(225deg)");
+        }, function() {
+          $("#portraitFront").css("transform", "rotateY(180deg)");
+        });
+        $("#portraitBack").hover(function() {
+          $("#portraitBack").css("transform", "rotateY(415deg)");
+        }, function() {
+          $("#portraitBack").css("transform", "rotateY(360deg)");
+        });
       });
       $("#portraitBack").click(function() {
         $("#portraitFront").css("transform", "rotateY(0deg)");
         $("#portraitBack").css("transform", "rotateY(180deg)");
-        // $("#portraitFront").hover(function() {
-        //   $("#portraitFront").css("transform", "rotateY(45deg)");
-        // }, function() {
-        //   $("#portraitFront").css("transform", "rotateY(0deg)");
-        // });
-        // $("#portraitBack").hover(function() {
-        //   $("#portraitBack").css("transform", "rotateY(225deg)");
-        // }, function() {
-        //   $("#portraitBack").css("transform", "rotateY(180deg)");
-        // });
+        $("#portraitFront").hover(function() {
+          $("#portraitFront").css("transform", "rotateY(45deg)");
+        }, function() {
+          $("#portraitFront").css("transform", "rotateY(0deg)");
+        });
+        $("#portraitBack").hover(function() {
+          $("#portraitBack").css("transform", "rotateY(225deg)");
+        }, function() {
+          $("#portraitBack").css("transform", "rotateY(180deg)");
+        });
       });
     });
   </script>
