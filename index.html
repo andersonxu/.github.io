@@ -11,7 +11,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <style media="screen">
     .bg-primary {
-      background-color: #F7882F !important;
+      background-color: rgba(247, 136, 47, 0.9) !important;
     }
 
     .bg-light {
@@ -29,6 +29,11 @@
 
     header.masthead {
       padding-top: calc(3rem + 66px);
+      padding-bottom: 3rem;
+    }
+
+    section.page-section {
+      padding-top: 3rem;
       padding-bottom: 3rem;
     }
 
@@ -69,6 +74,37 @@
     #portrait.load {
       opacity: 1;
     }
+
+    .flip {
+      width: 400px;
+      height: 400px;
+      perspective: 600px;
+    }
+
+    .flip>div {
+      transition: .5s;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+    }
+
+    .front {
+      transform: rotateY(0deg);
+    }
+
+    .back {
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform: rotateY(180deg);
+    }
+
+    .flip:hover .front {
+      transform: rotateY(45deg);
+    }
+
+    .flip:hover .back {
+      transform: rotateY(225deg);
+    }
   </style>
   <script type="text/javascript">
     $(document).ready(function() {
@@ -79,7 +115,7 @@
           if (target.length) {
             $('html, body').animate({
               scrollTop: (target.offset().top - 66)
-            }, 1000, "easeInOutExpo");
+            }, 500, "easeInOutExpo");
             return false;
           }
         }
@@ -106,6 +142,35 @@
       // Collapse the navbar when page is scrolled
       $(window).scroll(navbarCollapse);
       $("#portrait").addClass("load");
+
+      $("#portraitFront").click(function() {
+        $("#portraitFront").css("transform", "rotateY(180deg)");
+        $("#portraitBack").css("transform", "rotateY(360deg)");
+        $("#portraitFront").hover(function() {
+          $("#portraitFront").css("transform", "rotateY(225deg)");
+        }, function() {
+          $("#portraitFront").css("transform", "rotateY(180deg)");
+        });
+        $("#portraitBack").hover(function() {
+          $("#portraitBack").css("transform", "rotateY(415deg)");
+        }, function() {
+          $("#portraitBack").css("transform", "rotateY(360deg)");
+        });
+      });
+      $("#portraitBack").click(function() {
+        $("#portraitFront").css("transform", "rotateY(0deg)");
+        $("#portraitBack").css("transform", "rotateY(180deg)");
+        $("#portraitFront").hover(function() {
+          $("#portraitFront").css("transform", "rotateY(45deg)");
+        }, function() {
+          $("#portraitFront").css("transform", "rotateY(0deg)");
+        });
+        $("#portraitBack").hover(function() {
+          $("#portraitBack").css("transform", "rotateY(225deg)");
+        }, function() {
+          $("#portraitBack").css("transform", "rotateY(180deg)");
+        });
+      });
     });
   </script>
   <!--
@@ -141,7 +206,11 @@
     </div>
   </nav>
   <header class="masthead bg-light text-white text-center" id="about">
-    <div class="container"><img class="img-fluid d-block mx-auto mb-5 rounded-circle" src="imgs/portrait.jpg" width="400" height="400" id="portrait">
+    <div class="container">
+      <div class="flip container">
+        <div class="front" id="portraitFront"><img class="img-fluid d-block mx-auto mb-5 rounded-circle" src="imgs/portrait.jpg" width="400px" height="400px" id="portrait"></div>
+        <div class="back container" id="portraitBack"><img class="img-fluid d-block mx-auto mb-5 rounded-circle" src="imgs/portrait2.jpg" width="400px" height="400px"></div>
+      </div>
       <h1 class="text-uppercase">Zheng Xu</h1>
       <hr class="divider  my-4">
       <ul class="list-inline">
@@ -157,6 +226,7 @@
       </ul>
     </div>
   </header>
+
   <section class="page-section bg-primary" id="project">
     <div class="container">
       <div class="row justify-content-center">
@@ -169,7 +239,7 @@
       </div>
     </div>
   </section>
-  <div class="container-fluid" style="margin-top:80px" id="cv">
+  <div class="container-fluid" id="cv">
     <h3>固定导航栏</h3>
     <p>导航栏可以固定在头部或者底部。</p>
     <h1>滚动页面查看效果。</h1>
