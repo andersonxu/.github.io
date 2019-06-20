@@ -59,7 +59,7 @@
           $("#portraitFront").css("transform", "rotateY(180deg)");
         });
         $("#portraitBack").hover(function() {
-          $("#portraitBack").css("transform", "rotateY(415deg)");
+          $("#portraitBack").css("transform", "rotateY(405deg)");
         }, function() {
           $("#portraitBack").css("transform", "rotateY(360deg)");
         });
@@ -91,28 +91,30 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-md bg-primary-a navbar-dark fixed-top" id="mainNav">
-    <div class="wrapper">
-      <a class="navbar-brand js-scroll-trigger" href="#"><img src="imgs/hi.png" class="float-right" alt="logo" width="50" height="50" id="logo"></a>
-    </div>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto my-2 my-lg-0">
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#about">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#project">Projects</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#cv">CV</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#">Link</a>
-        </li>
-      </ul>
+  <nav class="navbar navbar-expand-lg bg-primary-a navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+      <div class="wrapper">
+        <a class="navbar-brand js-scroll-trigger" href="#"><img src="imgs/hi.png" class="float-right" alt="logo" width="50" height="50" id="logo"></a>
+      </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto my-2 my-lg-0">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#project">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#cv">CV</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#">Link</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
   <header class="masthead bg-light text-white text-center" id="about">
@@ -151,7 +153,12 @@
 
         <!-- 模态框主体 -->
         <div class="modal-body">
-          模态框内容..
+          <form action="https://formspree.io/andersonxu@gmail.com" method="POST" />
+          <input type="text" name="name">
+          <input type="email" name="email" placeholder="Your email">
+          <textarea name="message" placeholder="Test Message"></textarea>
+          <button type="submit">Send Test</button>
+          </form>
         </div>
 
         <!-- 模态框底部 -->
