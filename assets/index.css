@@ -6,7 +6,6 @@ body {
 #F7882F
 #F7C331
 #DCC7AA */
-
 .bg-primary-a {
   background-color: rgba(247, 136, 47, 0.9) !important;
 }
@@ -15,42 +14,41 @@ body {
   background-color: #F7882F !important;
 }
 
-.btn-primary {
-  outline:none;
-  background-color: #F7C331 !important;
-}
 .bg-light {
   background-color: #DCC7AA !important;
 }
 
 .wrapper {
-    position: relative;
-    overflow: hidden;
-    width: 50px;
-    height: 50px;
-        transition: 0.3s;
+  position: relative;
+  overflow: hidden;
+  width: 50px;
+  height: 50px;
+  transition: 0.3s;
 }
 
 #logo {
-    position: absolute;
-    left: -10px;
-    top:0;
-    width: 50px;
-    height: 50px;
-    transition: 0.3s;
+  position: absolute;
+  left: -10px;
+  top: 0;
+  width: 50px;
+  height: 50px;
+  transition: 0.3s;
 }
+
 .wrapper:hover {
-    transition: 0.3s;
-    left: 0px;
-    width:100px;
-    height:100px;
+  transition: 0.3s;
+  left: 0px;
+  width: 100px;
+  height: 100px;
 }
+
 .wrapper:hover #logo {
-    transition: 0.3s;
-    left: 0px;
-    width:100px;
-    height:100px;
+  transition: 0.3s;
+  left: 0px;
+  width: 100px;
+  height: 100px;
 }
+
 /* #logo{
   transition: all 0.3s;
 }
@@ -165,22 +163,85 @@ div {
   border: none;
   cursor: pointer;
   position: relative;
-	background: #cb4e4e;
-	color: #fff;
-	box-shadow: 0 6px #ab3c3c;
+  background: #cb4e4e;
+  color: #fff;
+  box-shadow: 0 6px #ab3c3c;
   outline: none !important;
-	-webkit-transition: none;
-	-moz-transition: none;
-	transition: none;
+  -webkit-transition: none;
+  -moz-transition: none;
+  transition: none;
   border-radius: 5rem;
-  padding:0.5rem 1.2rem;
+  padding: 0.5rem 1.2rem;
 }
+
 .btn-2:hover {
-	box-shadow: 0 4px #ab3c3c;
-	top: 2px;
+  box-shadow: 0 4px #ab3c3c;
+  top: 2px;
 }
 
 .btn-2:active {
-	box-shadow: 0 0 #ab3c3c;
-	top: 6px;
+  box-shadow: 0 0 #ab3c3c;
+  top: 6px;
+}
+
+.form-control {
+  outline: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid #6B7A8f;
+  border-radius: 5px;
+}
+
+.form-control:focus {
+  outline: none;
+  border-bottom: 2px solid #F7882F;
+  box-shadow: none;
+  transition: 0.3s;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+}
+
+.input-group input, .input-group textarea {
+  outline: none;
+  position: relative;
+  width: 100%;
+  padding: 1rem 0;
+  margin-top: .5rem;
+}
+
+.input-group>i {
+  font-size: 1rem;
+  margin-right: 0.5rem;
+  color: #6B7A8f;
+  transition: 0.3s;
+}
+
+i.prefix {
+  transition: 0.3s;
+  color: #F7882F;
+}
+
+.input-group .fa-user {
+  margin-right: 0.6rem;
+}
+
+.input-group>label {
+  z-index: 9999;
+  position: absolute;
+  top: 0.5rem;
+  left: 2rem;
+  color: #6B7A8f;
+  transition: 0.3s;
+}
+
+label.suffix {
+  transition: 0.3s;
+  top: 0;
+  font-size: 0.7rem;
+  color: #F7882F;
 }

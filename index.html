@@ -9,7 +9,7 @@
   <script src="jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+  <link href="assets/fontawesome/css/all.min.css" rel="stylesheet">
   <style media="screen">
     @import"assets/index.css";
   </style>
@@ -84,6 +84,16 @@
       }, function() {
         $("#logo").css("left", "-10px");
       });
+      $(".form-control").focus(function() {
+        $(this).prev().addClass("prefix");
+        $(this).next().addClass("suffix");
+      });
+      $(".form-control").blur(function() {
+        $(this).prev().removeClass("prefix");
+        if ($(this).val() == "") {
+          $(this).next().removeClass("suffix");
+        }
+      });
     });
   </script>
 
@@ -144,28 +154,48 @@
   <div class="modal fade" id="myModal">
     <div class="modal-dialog">
       <div class="modal-content">
+        <div class="container">
+          <!-- 模态框头部 -->
+          <div class="modal-header">
+            <h4 class="modal-title">Hire me!</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
 
-        <!-- 模态框头部 -->
-        <div class="modal-header">
-          <h4 class="modal-title">模态框头部</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
+          <!-- 模态框主体 -->
 
-        <!-- 模态框主体 -->
-        <div class="modal-body">
-          <form action="https://formspree.io/andersonxu88@gmail.com" method="POST" />
-          <input type="text" name="name">
-          <input type="text" name="_replyto" placeholder="Your email" />
-          <textarea name="message" placeholder="Test Message"></textarea>
-          <button type="submit">Send Test</button>
+          <div class="modal-body">
+
+            <form
+              action="&#0000104;&#x074;&#0000116;&#112;&#x0073;&#x3a;&#047;&#047;&#102;&#0111;&#000114;&#109;&#0115;&#0112;&#00000114;&#00000101;&#x00065;&#0000046;&#x0000069;&#00000111;&#x2f;&#00097;&#00110;&#0100;&#00101;&#x0072;&#000115;&#00000111;&#x000006e;&#0000120;&#0000117;&#x00038;&#00056;&#00064;&#00103;&#00000109;&#00097;&#105;&#00108;&#0046;&#0000099;&#00000111;&#0109;"
+              method="POST" />
+
+            <div class="input-group mb-3 input-group-sm">
+              <i class="fas fa-user fa-2x"></i>
+              <input type="text" class="form-control" name="name" id="hire-name">
+              <label for="hire-name">Your name</label>
+            </div>
+            <div class="input-group mb-3 input-group-sm">
+              <i class="fas fa-envelope fa-2x"></i>
+              <input type="email" class="form-control" name="_replyto" id="hire-email" />
+              <label for="hire-email">Your email</label>
+            </div>
+            <div class="input-group mb-3 input-group-sm">
+              <i class="fas fa-tag fa-2x"></i>
+              <input type="text" class="form-control" name="_subject" id="hire-subject" />
+              <label for="hire-subject">Subject</label>
+            </div>
+            <div class="input-group mb-3 input-group-sm">
+              <i class="fas fa-pencil-alt fa-2x" size="9"></i>
+              <textarea name="message" class="form-control" id="hire-message" rows="10"></textarea>
+              <label for="hire-message">Message</label>
+            </div>
+          </div>
+          <input type="text" class="form-control" name="_gotcha" style="display:none" />
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-warning">Send</button>
+          </div>
           </form>
         </div>
-
-        <!-- 模态框底部 -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-        </div>
-
       </div>
     </div>
   </div>
