@@ -203,7 +203,7 @@ div {
 .input-group {
   position: relative;
   display: flex;
-  align-items: baseline;
+  /* align-items: flex-start; */
 }
 
 .input-group input, .input-group textarea {
@@ -216,6 +216,7 @@ div {
 
 .input-group>i {
   font-size: 1rem;
+  margin-top: 1rem;
   margin-right: 0.5rem;
   color: #6B7A8f;
   transition: 0.3s;
