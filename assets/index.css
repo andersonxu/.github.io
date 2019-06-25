@@ -410,6 +410,14 @@ label.bar {
   background-color: #BD5D38;
 }
 
+.dev-icons {
+  font-size: 3rem;
+}
+
+.dev-icons .list-inline-item i:hover {
+  color: #BD5D38;
+}
+
 #exp {
   overflow: auto
 }
