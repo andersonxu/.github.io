@@ -377,6 +377,7 @@ input[name="r"] {
 .slide {
   height: 800px;
   transition: 0.6s;
+  overflow: auto
 }
 
 input:checked+label {
@@ -416,8 +417,4 @@ label.bar {
 
 .dev-icons .list-inline-item i:hover {
   color: #BD5D38;
-}
-
-#exp {
-  overflow: auto
 }
