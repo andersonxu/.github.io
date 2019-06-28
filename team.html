@@ -71,6 +71,8 @@
 
     table {
       margin: auto;
+      margin-top: 10px;
+      margin-bottom: 10px;
       width: 580px;
       border-collapse: collapse;
       padding: 3px;
@@ -233,6 +235,11 @@
       </div>
       <div class="sheet" id="sheet">
         <div class="nameTable" id="nameTable"></div>
+        <div class="buttons">
+          <input type="button" class="button" id="addTask" value="Add task">
+          <input type="button" class="button" id="deleteTask" value="Delete task">
+        </div>
+        <div class="taskTable" id="taskTable"></div>
         <div class="nameSheet" id="nameSheet"></div>
       </div>
     </div>
@@ -251,6 +258,11 @@
       Gender: "",
       Profession: "",
       Flag: ""
+    };
+    defaultTask={
+      Index:"",
+      Level:"",
+      Time:"",
     };
     var table = document.createElement('table');
     table.id = "tb";
@@ -302,6 +314,28 @@
     tbody.appendChild(tr);
     table.appendChild(tbody);
     nameTable.insertBefore(table, nameTable.lastChild);
+
+
+    var taskeTable = document.createElement('table');
+    taskeTable.id = "tasktb";
+    var taskeTbody = document.createElement("tbody");
+    taskeTbody.id = "tasktbody";
+    var tr = document.createElement('tr');
+    tr.id = -2;
+    tr.className = "title";
+    var th = document.createElement('th');
+    tr.appendChild(th);
+    for (var key in defaultTask) {
+      var th = document.createElement('th');
+      th.innerHTML = key; 
+      th.className = key;
+      tr.appendChild(th);
+    }
+    taskeTbody.appendChild(tr);
+    taskeTable.appendChild(taskeTbody);
+    taskTable.insertBefore(taskeTable, taskTable.lastChild);
+
+
 
     $("#fileImport").click(function() {
 
@@ -450,7 +484,7 @@
     obt.type = "button";
     obt.id = "btnDelete";
     obt.value = "Absent";
-    nameSheet.appendChild(obt);
+    nameTable.appendChild(obt);
     obt.onclick = function() {
       var otb = document.getElementById("tb");
       var tbody = otb.getElementsByTagName("tbody")[0];
@@ -532,6 +566,11 @@
       }
     }
     nameSheet.appendChild(mixDiv);
+    
+    
+    
+    
+    
     $('#nameSheet').fadeIn(500);
 
     var generate = document.createElement('input');
