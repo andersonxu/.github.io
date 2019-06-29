@@ -898,8 +898,8 @@
             td.innerHTML = 1;
             newtask[key] = 1;
           } else {
-            td.innerHTML = taskData[taskData.length - 1]["Index"] + 1;
-            newtask[key] = taskData[taskData.length - 1]["Index"] + 1;
+            td.innerHTML = parseInt(taskData[taskData.length - 1]["Index"]) + 1;
+            newtask[key] = parseInt(taskData[taskData.length - 1]["Index"]) + 1;
           }
         } else if (key == "Time") {
           td.contentEditable = "false";
