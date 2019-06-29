@@ -740,6 +740,10 @@
           // var teams = resultSheet.children;
           for (var i = 0; i < numTeam; i++) {
             var team = document.getElementById(i + "Team");
+            var totalDiffDiv=document.createElement("div");
+            totalDiffDiv.class="team";
+            totalDiffDiv.innerHTML="<strong>Total Difficulty: " + teamsAssigned[i]["TotalDiff"]+"</strong>";
+            team.appendChild(totalDiffDiv);
             for (var j = 0; j < teamsAssigned[i].Tasks.length; j++) {
               var task = document.createElement('div');
               task.className = "task";
@@ -749,10 +753,27 @@
                 taskF.innerHTML = teamsAssigned[i].Tasks[j][key];
                 task.appendChild(taskF);
               }
+              task.ondrop = function drop(ev) {
+                ev.preventDefault();
+                // if (srcdiv.className == "task") {
+                if (srcdiv != this) {
+                  srcdiv.innerHTML = this.innerHTML;
+                  this.innerHTML = ev.dataTransfer.getData("text/html");
+                }
+                // }
+              };
+              task.ondragover = function allowDrop(ev) {
+                ev.preventDefault();
+              };
+              task.draggable = "true";
+              task.ondragstart = function drag(ev) {
+                srcdiv = this;
+                ev.dataTransfer.setData("text/html", this.innerHTML);
+              };
               team.appendChild(task);
               // console.log(team);
             }
-            team.innerHTML += "Total Difficulty: " + teamsAssigned[i]["TotalDiff"];
+            // team.innerHTML += "Total Difficulty: " + teamsAssigned[i]["TotalDiff"];
 
           }
           // console.log(teams);
