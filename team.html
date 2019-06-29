@@ -551,12 +551,12 @@
 
         mixDivRow.ondrop = function drop(ev) {
           ev.preventDefault();
-          // if (srcdiv.className == "mixDivRow") {
+          if(this.className == "mixDivRow" &&srcdiv.className == "mixDivRow") {
           if (srcdiv != this) {
             srcdiv.innerHTML = this.innerHTML;
             this.innerHTML = ev.dataTransfer.getData("text/html");
           }
-          // }
+          }
 
         };
         mixDivRow.ondragover = function allowDrop(ev) {
@@ -675,12 +675,12 @@
               }
               person.ondrop = function drop(ev) {
                 ev.preventDefault();
-                // if (srcdiv.className == "person") {
-                if (srcdiv != this) {
-                  srcdiv.innerHTML = this.innerHTML;
-                  this.innerHTML = ev.dataTransfer.getData("text/html");
+                if (this.className == "person" && srcdiv.className == "person") {
+                  if (srcdiv != this) {
+                    srcdiv.innerHTML = this.innerHTML;
+                    this.innerHTML = ev.dataTransfer.getData("text/html");
+                  }
                 }
-                // }
               };
               person.ondragover = function allowDrop(ev) {
                 ev.preventDefault();
@@ -740,10 +740,12 @@
           // var teams = resultSheet.children;
           for (var i = 0; i < numTeam; i++) {
             var team = document.getElementById(i + "Team");
-            var totalDiffDiv=document.createElement("div");
-            totalDiffDiv.class="team";
-            totalDiffDiv.innerHTML="<strong>Total Difficulty: " + teamsAssigned[i]["TotalDiff"]+"</strong>";
-            team.appendChild(totalDiffDiv);
+            var taskInTeam = document.createElement("div");
+            team.appendChild(taskInTeam);
+            var totalDiffDiv = document.createElement("div");
+            totalDiffDiv.class = "team";
+            totalDiffDiv.innerHTML = "<strong>Total Difficulty: " + teamsAssigned[i]["TotalDiff"] + "</strong>";
+            taskInTeam.appendChild(totalDiffDiv);
             for (var j = 0; j < teamsAssigned[i].Tasks.length; j++) {
               var task = document.createElement('div');
               task.className = "task";
@@ -755,12 +757,20 @@
               }
               task.ondrop = function drop(ev) {
                 ev.preventDefault();
-                // if (srcdiv.className == "task") {
-                if (srcdiv != this) {
-                  srcdiv.innerHTML = this.innerHTML;
-                  this.innerHTML = ev.dataTransfer.getData("text/html");
+                if (this.className == "task" && srcdiv.className == "task") {
+                  if (srcdiv != this) {
+                    var currentDiff = parseFloat(srcdiv.parentNode.firstChild.innerHTML.replace(/[^\d\.]/g, ''));
+                    var newDiff = currentDiff - parseFloat(srcdiv.lastChild.innerHTML) + parseFloat(this.lastChild.innerHTML);
+                    newDiff = newDiff.toFixed(2);
+                    srcdiv.parentNode.firstChild.innerHTML = "<strong>Total Difficulty: " + newDiff + "</strong>";
+                    currentDiff = parseFloat(this.parentNode.firstChild.innerHTML.replace(/[^\d\.]/g, ''));
+                    newDiff = currentDiff + parseFloat(srcdiv.lastChild.innerHTML) - parseFloat(this.lastChild.innerHTML);
+                    newDiff = newDiff.toFixed(2);
+                    this.parentNode.firstChild.innerHTML = "<strong>Total Difficulty: " + newDiff + "</strong>";
+                    srcdiv.innerHTML = this.innerHTML;
+                    this.innerHTML = ev.dataTransfer.getData("text/html");
+                  }
                 }
-                // }
               };
               task.ondragover = function allowDrop(ev) {
                 ev.preventDefault();
@@ -770,7 +780,7 @@
                 srcdiv = this;
                 ev.dataTransfer.setData("text/html", this.innerHTML);
               };
-              team.appendChild(task);
+              totalDiffDiv.appendChild(task);
               // console.log(team);
             }
             // team.innerHTML += "Total Difficulty: " + teamsAssigned[i]["TotalDiff"];
