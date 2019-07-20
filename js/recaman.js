@@ -61,12 +61,15 @@ function draw() {
     background(0);
     textSize(32);
     fill(color(count % 256,100,255));
-    text("Next number: "+index, width/16, height/16);
-    text("Current index: "+count, width/16, height/16+32);
-    text("Lagest number: "+biggest, width/16, height/16+64);
-    text("Smaller uncovered number: "+smallest, width/16, height/16+96);
-    translate(0, height / 2);
-    scale(width / biggest);
+    text("Next number: "+index, windowWidth/16, windowHeight/16);
+    text("Current index: "+count, windowWidth/16, windowHeight/16+32);
+    text("Lagest number: "+biggest, windowWidth/16, windowHeight/16+64);
+    text("Smaller uncovered number: "+smallest, windowWidth/16, windowHeight/16+96);
+    textSize(20);
+    fill(255);
+    text("The first sequence (A005132) is a sequence of nonnegative integers separated by steps that can be described as “subtract if possible, otherwise add”:\na (0) = 0 ; for  n > 0, a (n) = a (n  −  1)  −  n  if that number is positive and not already in the sequence, otherwise  a (n) = a (n  −  1) + n , whether or not that number is already in the sequence."+smallest, windowWidth/6, windowHeight*14/16,windowWidth*3/4, windowHeight);
+    translate(0, windowHeight / 2);
+    scale(windowWidth / biggest);
     for (let a of arcs) {
         a.show();
     }
