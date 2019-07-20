@@ -3,48 +3,22 @@ let count = 1;
 let sequence = [];
 let index = 0;
 let arcs = [];
-let sixteen = 16;
+let biggest=0;
+let smallest=1;
 class Arc {
     constructor(start, end, count) {
         this.start = start;
         this.end = end;
         this.dir = count % 2;
-        let RGB_index = parseInt(count / 16) % 6;
-        let increase = count % 16;
-        if (RGB_index == 0) {
-            this.R = 127 + increase * 16;
-            this.G=127;
-            this.B=255;
-        } else if (RGB_index == 1) {
-            this.R = 255;
-            this.G=127;
-            this.B=255 - increase * 16;
-        }else if (RGB_index == 2) {
-            this.R = 255;
-            this.G=127 + increase * 16;
-            this.B=127;
-        }
-        else if (RGB_index == 3) {
-            this.R = 255 - increase * 16;
-            this.G=255;
-            this.B=127;
-        }
-        else if (RGB_index == 4) {
-            this.R = 127;
-            this.G=255;
-            this.B=127 + increase * 16;
-        }
-        else if (RGB_index == 5) {
-            this.R = 127;
-            this.G = 255 - increase * 16;
-            this.B=255;
-        }
+        colorMode(HSB,255);
+        this.c =color(count % 256,100,255);
     }
     show() {
         let diameter = abs(this.end - this.start);
         let x = (this.end + this.start) / 2;
 
-        stroke(this.R,this.G,this.B);
+        stroke(this.c);
+        strokeWeight(1);
         noFill();
         if (this.dir == 0) {
             arc(x, 0, diameter, diameter, 0, PI);
@@ -71,14 +45,28 @@ function step() {
     let a = new Arc(index, next, count);
     arcs.push(a);
     index = next;
+    if(index>biggest){
+        biggest=index;
+    }
+    if(next==smallest){
+        smallest++;
+        while(numbers[smallest]){
+            smallest++;
+        }
+    }
     count++;
 }
 function draw() {
     step();
-    translate(0, height / 2);
-    scale(width / count);
     background(0);
-
+    textSize(32);
+    fill(color(count % 256,100,255));
+    text("Next number: "+index, width/16, height/16);
+    text("Current index: "+count, width/16, height/16+32);
+    text("Lagest number: "+biggest, width/16, height/16+64);
+    text("Smaller uncovered number: "+smallest, width/16, height/16+96);
+    translate(0, height / 2);
+    scale(width / biggest);
     for (let a of arcs) {
         a.show();
     }
