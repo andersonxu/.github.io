@@ -3,6 +3,7 @@ let count = 1;
 let sequence = [];
 let index = 0;
 let arcs = [];
+
 class Arc {
     constructor(start, end, dir) {
         this.start = start;
