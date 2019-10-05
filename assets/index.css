@@ -6,6 +6,12 @@ body {
 #F7882F
 #F7C331
 #DCC7AA */
+<!--
+　　A:link {color:blue; text－decoration: none}
+　　A:visited {color:red; text－decoration:line－through}
+　　A:active {color:white; text－decoration:underline}
+　　A:hover {color:yellow;text－decoration:none;background－color:black}
+-->
 .bg-primary-a {
   background-color: rgba(63, 31, 5, 0.9) !important;
 }
