@@ -16,6 +16,9 @@ function arenaSweep() {
         ++y;
         player.score += rowCount * 10;
         rowCount *= 2;
+        if (dropInterval > 80) {
+            dropInterval -= 10;
+        }
     }
 }
 
